@@ -580,7 +580,7 @@ def build_dealer():
     <div class="prose" style="margin-top:28px"><h3 style="color:var(--cream);margin-top:0">Câu hỏi thường gặp</h3>
       <p style="color:var(--soft-d)"><b style="color:var(--cream)">Có được trộn nhiều mã gai trong một đơn?</b><br>Có. Một đơn có thể gồm nhiều mã gai và cỡ lốp khác nhau.</p>
       <p style="color:var(--soft-d)"><b style="color:var(--cream)">Bảo hành xử lý thế nào?</b><br>Bảo hành 3 năm kể từ ngày mua hàng tại Dương Gia đối với lỗi do sản xuất. Đại lý tiếp nhận và chuyển hồ sơ cho Dương Gia; Dương Gia phản hồi trong 7 ngày làm việc.</p>
-      <p style="color:var(--soft-d)"><b style="color:var(--cream)">Có xuất hóa đơn VAT không?</b><br>Có. Giá đã gồm VAT, Dương Gia xuất hóa đơn cho mọi đơn hàng.</p></div></div>
+      <p style="color:var(--soft-d)"><b style="color:var(--cream)">Có xuất hóa đơn VAT không?</b><br>Có. Giá đã gồm VAT; Dương Gia xuất hóa đơn VAT cho đơn sỉ và khách doanh nghiệp.</p></div></div>
   {form_dai_ly(r)}
 </div></section>'''
     write('dai-ly.html', page('dai-ly.html', 0, 'Trở thành đại lý lốp WYNSTAR | Dương Gia', 'Chương trình đại lý lốp WYNSTAR của Dương Gia: giá theo hạng Bạc, Vàng, Kim Cương; đặt hàng và theo dõi đơn trên ứng dụng DG Đặt Hàng; đăng ký mở tài khoản trực tuyến.', 'dai-ly', body, [ld_crumbs([('Dành cho đại lý', 'dai-ly.html')])]))
@@ -647,10 +647,11 @@ def build_about():
       <p>Công ty TNHH Thương mại Dịch vụ XNK Dương Gia nhập khẩu trực tiếp lốp tải từ nhà máy và phân phối cho đại lý, garage, đội xe và doanh nghiệp vận tải.</p>
       <p>Dương Gia hiện là nhà phân phối lốp WYNSTAR tại Việt Nam và vận hành cửa hàng dịch vụ lốp tại Đắk Lắk: lốp xe, mâm xe, ắc quy, dầu nhớt và các dịch vụ lốp.</p>
       <h2>Người điều hành</h2>
-      <p><b>{CTY['dai_dien']}</b> — {CTY['chuc_vu']}. Hơn 10 năm kinh nghiệm trong lĩnh vực tài chính – ngân hàng trước khi điều hành Dương Gia.</p></div>
+      <p><b>{CTY['dai_dien']}</b> — {CTY['chuc_vu']}. Hơn 10 năm trong ngành tài chính – ngân hàng, gần nhất tại HSBC Việt Nam và Standard Chartered Việt Nam. Thành lập Dương Gia năm 2025 và toàn tâm điều hành từ tháng 7/2026. Thành viên Nhóm Xúc Tiến Thương Mại – Giới Doanh Nhân Công Giáo TGP TP.HCM.</p>
+      <p>Triết lý: bán đúng giá, nói đúng chất lượng, giữ đúng lời hẹn.</p></div>
     <div><h2 class="disp" style="font-size:34px;margin-bottom:16px">Cách chúng tôi làm việc</h2>
       <div style="display:grid;gap:14px">
-        <div class="lc"><span class="tag">Minh bạch</span><p>Giá niêm yết công khai, chính sách đại lý rõ ràng, hóa đơn đầy đủ cho mọi đơn hàng.</p></div>
+        <div class="lc"><span class="tag">Minh bạch</span><p>Giá niêm yết công khai, chính sách đại lý rõ ràng, hóa đơn VAT đầy đủ cho đơn sỉ và khách doanh nghiệp.</p></div>
         <div class="lc"><span class="tag">Chính ngạch</span><p>Nhập khẩu trực tiếp, đủ chứng từ, kiểm tra chất lượng theo quy chuẩn kỹ thuật Việt Nam.</p></div>
         <div class="lc"><span class="tag">Đồng hành</span><p>Hỗ trợ đại lý từ chọn lốp, đặt hàng, giao nhận đến bảo hành.</p></div>
       </div></div>
@@ -700,7 +701,7 @@ def build_policy():
     <ul>
       <li>Giá niêm yết trên website tính bằng đồng Việt Nam cho một lốp, đã gồm thuế giá trị gia tăng (VAT). Giá có thể thay đổi; giá áp dụng là giá trên báo giá hoặc đơn đặt hàng được Dương Gia xác nhận.</li>
       <li>Hình thức thanh toán: chuyển khoản vào tài khoản ngân hàng đứng tên {CTY['ten']} (thông tin tài khoản ghi trên đơn đặt hàng), hoặc tiền mặt tại cửa hàng.</li>
-      <li>Dương Gia xuất hóa đơn giá trị gia tăng cho mọi đơn hàng.</li>
+      <li>Dương Gia xuất hóa đơn giá trị gia tăng cho đơn sỉ và khách doanh nghiệp.</li>
       <li>Đại lý: điều kiện thanh toán và công nợ theo chính sách từng hạng đại lý, thể hiện trên đơn đặt hàng.</li>
       <li>Dương Gia không yêu cầu chuyển tiền vào tài khoản cá nhân. Khi nhận thông báo thay đổi tài khoản, vui lòng gọi {CTY['hotline']} để xác nhận trước khi chuyển tiền.</li>
     </ul>
