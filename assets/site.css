@@ -73,6 +73,9 @@ a:hover{color:var(--ink)}
 .hero h1{font-size:76px;max-width:820px;color:var(--cream)}
 .hero .lead{font-size:18px;max-width:580px;color:var(--soft-d);margin:22px 0 32px}
 .hero .eyebrow{color:var(--brass-l)}
+.hero.dl-bg .bg{object-position:50% 40%;opacity:.6}
+.hero.dl-bg .shade{background:linear-gradient(180deg,rgba(26,25,23,.55) 0%,rgba(26,25,23,.78) 60%,rgba(26,25,23,.96) 100%)}
+.hero.dl-bg .wrap{padding-bottom:110px}
 .stats{display:flex;gap:36px;margin-top:60px;flex-wrap:wrap}
 .stats div{border-top:1px solid var(--brass);padding-top:12px;min-width:170px;max-width:230px}
 .stats .n{font-family:var(--disp);font-size:40px;font-weight:700;line-height:1;color:var(--cream)}

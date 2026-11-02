@@ -193,8 +193,8 @@ def ld_crumbs(trail):
     for n, (t, p) in enumerate(trail, 2): items.append({'@type': 'ListItem', 'position': n, 'name': t, 'item': CTY['domain'] + '/' + p})
     return {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': items}
 
-def pagehead(r, trail, eyebrow, h1, lead, extra=''):
-    return f'''<section class="pagehead"><div class="wrap">{crumbs(r, trail)}<p class="eyebrow">{e(eyebrow)}</p><h1 class="disp">{e(h1)}</h1><p class="lead">{lead}</p>{extra}</div></section>'''
+def pagehead(r, trail, eyebrow, h1, lead, extra='', h1_html=None):
+    return f'''<section class="pagehead"><div class="wrap">{crumbs(r, trail)}<p class="eyebrow">{e(eyebrow)}</p><h1 class="disp">{h1_html or e(h1)}</h1><p class="lead">{lead}</p>{extra}</div></section>'''
 
 def card(it, r, hidden=False):
     img = ('<img src="%simg/lop/%s.jpg" alt="Mẫu gai WYNSTAR %s" loading="lazy" width="600" height="600">' % (r, slug(it['g']), e(it['g']))) if it['img'] else NOIMG
@@ -505,7 +505,7 @@ def build_brand():
         groups += f'<div class="lc"><span class="tag">{e(v)}</span><p style="font-size:16px;font-weight:600">{links}</p></div>'
     body = pagehead(r, [('Thương hiệu WYNSTAR', 'thuong-hieu-wynstar.html')], 'Thương hiệu phân phối', 'WYNSTAR',
                     'Lốp tải radial toàn thép của Double Coin Group (Chongqing) Tyre Co., Ltd. Dương Gia nhập khẩu trực tiếp và phân phối WYNSTAR tại Việt Nam.',
-                    '<img src="img/wynstar-trang.svg" alt="" width="330" height="40" style="height:40px;width:auto;margin-top:28px">') + f'''
+                    '', h1_html='<img src="img/wynstar-trang.svg" alt="WYNSTAR" width="495" height="60" style="height:clamp(40px,6vw,64px);width:auto;display:block;margin:6px 0 10px">') + f'''
 <section class="sec"><div class="wrap">
   <div class="two">
     <div class="prose">
@@ -551,7 +551,7 @@ def build_dealer():
              ('Giao hàng', 'Giao toàn quốc theo địa chỉ; miễn phí giao hàng trong TP.HCM (địa bàn cũ).')]
     step_html = ''.join(f'<div class="step"><div class="k">{n}</div><h3 class="disp">{e(t)}</h3><p>{e(d)}</p></div>' for n, (t, d) in enumerate(steps, 1))
     body = f'''
-<section class="hero" style="background:var(--char-3)"><div class="wrap" style="max-width:860px">
+<section class="hero dl-bg"><picture><source media="(max-width:640px)" srcset="img/bang-hieu-m.jpg"><img class="bg" src="img/bang-hieu.jpg" alt="" width="1920" height="863" loading="eager"></picture><div class="shade"></div><div class="wrap" style="max-width:860px">
   <div>{crumbs(r, [('Dành cho đại lý', 'dai-ly.html')])}<p class="eyebrow">Dành cho đại lý · garage · đội xe</p><h1 class="disp">Trở thành đồng đội Dương Gia</h1>
     <p class="lead">Nguồn hàng nhập khẩu chính ngạch, giá theo hạng đại lý, đặt hàng và theo dõi đơn trên ứng dụng — không phải gọi hỏi giá từng lần.</p>
     <div class="ctas"><a class="btn btn-pri" href="#dang-ky">Mở tài khoản đại lý</a><a class="btn btn-ghost" href="{CTY['app']}" rel="noopener">Đặt hàng</a></div></div>
@@ -644,7 +644,7 @@ def build_about():
     <div class="prose"><h2>Chúng tôi là ai</h2>
       <p>Công ty TNHH Thương mại Dịch vụ XNK Dương Gia nhập khẩu trực tiếp lốp tải từ nhà máy và phân phối cho đại lý, garage, đội xe và doanh nghiệp vận tải.</p>
       <p>Dương Gia hiện là nhà phân phối lốp WYNSTAR tại Việt Nam và vận hành cửa hàng dịch vụ lốp tại Đắk Lắk: lốp xe, mâm xe, ắc quy, dầu nhớt và các dịch vụ lốp.</p>
-      <h2>Cách làm việc</h2>
+      <h2>Nguyên tắc của chúng tôi</h2>
       <p>Bán đúng giá, nói đúng chất lượng, giữ đúng lời hẹn — làm ăn lâu dài không có đường tắt.</p></div>
     <div><h2 class="disp" style="font-size:34px;margin-bottom:16px">Cách chúng tôi làm việc</h2>
       <div style="display:grid;gap:14px">
