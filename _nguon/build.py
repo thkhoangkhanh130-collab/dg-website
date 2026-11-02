@@ -169,7 +169,7 @@ def page(path, depth, title, desc, active, body, ld=None, og_title=None):
 <footer class="foot">
   <div class="wrap">
     <div><img src="{r}img/logo-dg-trang.png" alt="Dương Gia" width="83" height="34" style="height:34px;width:auto;margin-bottom:14px">
-      <p class="co"><b>{CTY['ten']}</b><br>MST/ĐKDN {CTY['mst']} · cấp lần đầu 13/01/2025, Sở KH&amp;ĐT tỉnh Đắk Lắk<br>Trụ sở: {CTY['dia_chi']}<br>Hotline · Zalo: <a href="tel:{CTY['tel']}">{CTY['hotline']}</a> · Email: <a href="mailto:{CTY['email']}">{CTY['email']}</a></p></div>
+      <p class="co"><b>{CTY['ten']}</b><br>MST/ĐKDN {CTY['mst']} · cấp lần đầu 13/01/2025, Sở KH&amp;ĐT tỉnh Đắk Lắk · Người đại diện theo pháp luật: {CTY['dai_dien']}<br>Trụ sở: {CTY['dia_chi']}<br>Hotline · Zalo: <a href="tel:{CTY['tel']}">{CTY['hotline']}</a> · Email: <a href="mailto:{CTY['email']}">{CTY['email']}</a></p></div>
     <div><h2>Sản phẩm &amp; đại lý</h2><ul><li><a href="{href(r, 'san-pham/')}">Lốp WYNSTAR</a></li><li><a href="{href(r, 'dai-ly.html')}">Chương trình đại lý</a></li><li><a href="{CTY['app']}" rel="noopener">Ứng dụng DG Đặt Hàng ↗</a></li><li><a href="{href(r, 'bao-hanh.html')}">Bảo hành &amp; kỹ thuật</a></li></ul></div>
     <div><h2>Công ty</h2><ul><li><a href="{href(r, 'gioi-thieu.html')}">Về Dương Gia</a></li><li><a href="{href(r, 'thuong-hieu-wynstar.html')}">Thương hiệu WYNSTAR</a></li><li><a href="{href(r, 'lien-he.html')}">Liên hệ</a></li><li><a href="{href(r, 'chinh-sach.html')}">Chính sách &amp; điều khoản</a></li></ul></div>
   </div>
@@ -660,6 +660,7 @@ def build_about():
     <tr><th>Tên doanh nghiệp</th><td>{CTY['ten']}</td></tr>
     <tr><th>Tên tiếng Anh</th><td>{CTY['ten_en']}</td></tr>
     <tr><th>Mã số thuế</th><td>{CTY['mst']}</td></tr>
+    <tr><th>Người đại diện theo pháp luật</th><td>{CTY['dai_dien']} — {CTY['chuc_vu']}</td></tr>
     <tr><th>Trụ sở</th><td>{CTY['dia_chi']}</td></tr>
     <tr><th>Điện thoại</th><td><a href="tel:{CTY['tel']}">{CTY['hotline']}</a></td></tr>
     <tr><th>Email</th><td><a href="mailto:{CTY['email']}">{CTY['email']}</a></td></tr>
@@ -706,13 +707,14 @@ def build_policy():
     <ul>
       <li>Giao hàng toàn quốc theo địa chỉ khách hàng; phí giao hàng theo địa chỉ giao và được báo trước khi xác nhận đơn.</li>
       <li>Miễn phí giao hàng trong TP.HCM (địa bàn cũ).</li>
-      <li>Thời gian giao dự kiến ghi trên đơn đặt hàng.</li>
-      <li>Khi nhận hàng, vui lòng kiểm tra số lượng, quy cách, mã gai; báo ngay cho Dương Gia nếu có sai lệch.</li>
+      <li>Phương thức giao: xe của Dương Gia hoặc đơn vị vận chuyển hợp tác; đơn vị vận chuyển và thời gian giao dự kiến ghi trên đơn đặt hàng.</li>
+      <li>Khi nhận hàng, vui lòng kiểm tra số lượng, quy cách, mã gai; báo cho Dương Gia trong 05 ngày làm việc kể từ khi nhận hàng nếu có sai lệch.</li>
     </ul>
     <h2 id="doi-hang">Bảo hành &amp; đổi hàng</h2>
     <ul>
       <li>Bảo hành 3 năm kể từ ngày mua hàng đối với lỗi do sản xuất — chi tiết tại trang <a href="{href(r, 'bao-hanh.html')}">Bảo hành &amp; kỹ thuật</a>.</li>
-      <li>Dương Gia đổi đúng hàng khi giao sai quy cách, sai mã gai hoặc sai số lượng so với đơn đặt hàng đã xác nhận.</li>
+      <li>Dương Gia đổi đúng hàng khi giao sai quy cách, sai mã gai hoặc sai số lượng so với đơn đặt hàng đã xác nhận, khi được báo trong 05 ngày làm việc kể từ khi nhận hàng; Dương Gia chịu chi phí vận chuyển phát sinh khi lỗi do Dương Gia.</li>
+      <li>Hoàn tiền (khi hai bên thống nhất không đổi hàng): chuyển khoản về tài khoản đã thanh toán trong 09 ngày làm việc kể từ ngày thống nhất.</li>
       <li>Lốp đã lắp lên xe hoặc đã sử dụng không áp dụng đổi trả, trừ trường hợp được bảo hành.</li>
     </ul>
     <h2 id="bao-mat">Bảo vệ dữ liệu cá nhân</h2>
@@ -722,7 +724,7 @@ def build_policy():
       <li><b>Dữ liệu thu thập:</b> tên cửa hàng hoặc đơn vị, họ tên người liên hệ, số điện thoại, tỉnh/thành, mã số thuế (nếu cung cấp) và nhu cầu bạn nhập vào biểu mẫu trên website.</li>
       <li><b>Mục đích:</b> liên hệ tư vấn, báo giá, mở tài khoản đại lý, giao hàng và chăm sóc khách hàng. Dương Gia không dùng dữ liệu này cho mục đích khác khi chưa có sự đồng ý của bạn.</li>
       <li><b>Căn cứ xử lý:</b> sự đồng ý của bạn, thể hiện bằng ô đồng ý trên biểu mẫu (không đánh dấu sẵn). Thời điểm bạn đồng ý được lưu cùng thông tin gửi đến.</li>
-      <li><b>Lưu trữ và bảo mật:</b> trên hệ thống quản lý khách hàng của Dương Gia, vận hành trên dịch vụ lưu trữ đám mây của Google; chỉ nhân sự phụ trách được truy cập. Dữ liệu được lưu trong thời gian cần cho các mục đích trên hoặc đến khi bạn yêu cầu xóa, trừ trường hợp pháp luật yêu cầu lưu giữ.</li>
+      <li><b>Lưu trữ và bảo mật:</b> trên hệ thống quản lý khách hàng của Dương Gia, vận hành trên dịch vụ lưu trữ đám mây của Google; chỉ nhân sự phụ trách được truy cập. Dữ liệu được lưu trong thời gian còn giao dịch và tối đa 05 năm kể từ giao dịch cuối, hoặc đến khi bạn yêu cầu xóa; chứng từ kế toán lưu theo thời hạn của Luật Kế toán.</li>
       <li><b>Chia sẻ:</b> Dương Gia không bán hoặc chia sẻ dữ liệu cho bên thứ ba, trừ đơn vị vận chuyển khi giao hàng hoặc theo yêu cầu của cơ quan nhà nước có thẩm quyền.</li>
       <li><b>Quyền của bạn:</b> xem, chỉnh sửa, xóa dữ liệu, rút lại sự đồng ý hoặc phản đối việc xử lý bằng cách gọi {CTY['hotline']} hoặc email {CTY['email']}. Dương Gia xử lý yêu cầu trong thời hạn pháp luật quy định.</li>
       <li><b>Trình duyệt:</b> website không dùng cookie quảng cáo hay công cụ theo dõi; chỉ lưu tạm giá và tình trạng hàng trong trình duyệt để trang tải nhanh hơn.</li>
@@ -731,7 +733,7 @@ def build_policy():
     <p>Mọi phản ánh về sản phẩm, giao hàng hoặc dịch vụ, vui lòng gửi qua hotline / Zalo {CTY['hotline']} hoặc email {CTY['email']}. Dương Gia phản hồi trong 7 ngày làm việc.</p>
     <ol>
       <li>Gửi phản ánh kèm thông tin đơn hàng hoặc chứng từ mua hàng, hình ảnh (nếu có).</li>
-      <li>Dương Gia tiếp nhận và xác nhận đã nhận phản ánh qua kênh bạn đã liên hệ.</li>
+      <li>Dương Gia xác nhận đã nhận phản ánh trong 03 ngày làm việc, qua kênh bạn đã liên hệ.</li>
       <li>Dương Gia kiểm tra, thẩm định; với lỗi sản phẩm, phối hợp cùng nhà sản xuất khi cần.</li>
       <li>Dương Gia thông báo kết quả và hướng xử lý trong 7 ngày làm việc kể từ khi nhận đủ thông tin.</li>
     </ol>
@@ -744,7 +746,7 @@ def build_policy():
     </ul>
     <h2 id="doanh-nghiep">Thông tin doanh nghiệp</h2>
     <p>{CTY['ten']} · MST {CTY['mst']} · Trụ sở: {CTY['dia_chi']} · Điện thoại: {CTY['hotline']} · Email: {CTY['email']}.</p>
-    <p>Giấy chứng nhận đăng ký doanh nghiệp số {CTY['mst']}, đăng ký lần đầu ngày 13/01/2025 tại Phòng Đăng ký kinh doanh – Sở Kế hoạch và Đầu tư tỉnh Đắk Lắk.</p>
+    <p>Giấy chứng nhận đăng ký doanh nghiệp số {CTY['mst']}, đăng ký lần đầu ngày 13/01/2025 tại Phòng Đăng ký kinh doanh – Sở Kế hoạch và Đầu tư tỉnh Đắk Lắk. Người đại diện theo pháp luật: {CTY['dai_dien']} — {CTY['chuc_vu']}.</p>
     <p class="stamp">Cập nhật ngày {SNAPSHOT_AT}.</p>
   </div>
 </div></section>'''
