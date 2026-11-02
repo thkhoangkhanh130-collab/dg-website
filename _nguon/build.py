@@ -169,7 +169,7 @@ def page(path, depth, title, desc, active, body, ld=None, og_title=None):
 <footer class="foot">
   <div class="wrap">
     <div><img src="{r}img/logo-dg-trang.png" alt="Dương Gia" width="83" height="34" style="height:34px;width:auto;margin-bottom:14px">
-      <p class="co"><b>{CTY['ten']}</b><br>MST {CTY['mst']}<br>Trụ sở: {CTY['dia_chi']}<br>Hotline · Zalo: <a href="tel:{CTY['tel']}">{CTY['hotline']}</a> · Email: <a href="mailto:{CTY['email']}">{CTY['email']}</a></p></div>
+      <p class="co"><b>{CTY['ten']}</b><br>MST/ĐKDN {CTY['mst']} · cấp lần đầu 13/01/2025, Sở KH&amp;ĐT tỉnh Đắk Lắk<br>Trụ sở: {CTY['dia_chi']}<br>Hotline · Zalo: <a href="tel:{CTY['tel']}">{CTY['hotline']}</a> · Email: <a href="mailto:{CTY['email']}">{CTY['email']}</a></p></div>
     <div><h2>Sản phẩm &amp; đại lý</h2><ul><li><a href="{href(r, 'san-pham/')}">Lốp WYNSTAR</a></li><li><a href="{href(r, 'dai-ly.html')}">Chương trình đại lý</a></li><li><a href="{CTY['app']}" rel="noopener">Ứng dụng DG Đặt Hàng ↗</a></li><li><a href="{href(r, 'bao-hanh.html')}">Bảo hành &amp; kỹ thuật</a></li></ul></div>
     <div><h2>Công ty</h2><ul><li><a href="{href(r, 'gioi-thieu.html')}">Về Dương Gia</a></li><li><a href="{href(r, 'thuong-hieu-wynstar.html')}">Thương hiệu WYNSTAR</a></li><li><a href="{href(r, 'lien-he.html')}">Liên hệ</a></li><li><a href="{href(r, 'chinh-sach.html')}">Chính sách &amp; điều khoản</a></li></ul></div>
   </div>
@@ -695,7 +695,8 @@ def build_policy():
   <div class="prose">
     <h2 id="thanh-toan">Giá &amp; thanh toán</h2>
     <ul>
-      <li>Giá niêm yết trên website tính bằng đồng Việt Nam cho một lốp, đã gồm thuế giá trị gia tăng (VAT). Giá có thể thay đổi; giá áp dụng là giá trên báo giá hoặc đơn đặt hàng được Dương Gia xác nhận.</li>
+      <li>Giá niêm yết trên website tính bằng đồng Việt Nam cho một lốp, đã gồm thuế giá trị gia tăng (VAT), chưa gồm phí vận chuyển (nếu có). Giá có thể thay đổi; giá áp dụng là giá trên báo giá hoặc đơn đặt hàng được Dương Gia xác nhận.</li>
+      <li>Giá và tình trạng hàng trên website là thông tin tại thời điểm xem; số lượng bán theo tồn kho thực tế khi Dương Gia xác nhận đơn. Chương trình khuyến mại (nếu có) ghi rõ thời gian, đối tượng và điều kiện áp dụng.</li>
       <li>Hình thức thanh toán: chuyển khoản vào tài khoản ngân hàng đứng tên {CTY['ten']} (thông tin tài khoản ghi trên đơn đặt hàng), hoặc tiền mặt tại cửa hàng.</li>
       <li>Dương Gia xuất hóa đơn giá trị gia tăng cho đơn sỉ và khách doanh nghiệp.</li>
       <li>Đại lý: điều kiện thanh toán và công nợ theo chính sách từng hạng đại lý, thể hiện trên đơn đặt hàng.</li>
@@ -728,6 +729,12 @@ def build_policy():
     </ul>
     <h2 id="khieu-nai">Giải quyết khiếu nại</h2>
     <p>Mọi phản ánh về sản phẩm, giao hàng hoặc dịch vụ, vui lòng gửi qua hotline / Zalo {CTY['hotline']} hoặc email {CTY['email']}. Dương Gia phản hồi trong 7 ngày làm việc.</p>
+    <ol>
+      <li>Gửi phản ánh kèm thông tin đơn hàng hoặc chứng từ mua hàng, hình ảnh (nếu có).</li>
+      <li>Dương Gia tiếp nhận và xác nhận đã nhận phản ánh qua kênh bạn đã liên hệ.</li>
+      <li>Dương Gia kiểm tra, thẩm định; với lỗi sản phẩm, phối hợp cùng nhà sản xuất khi cần.</li>
+      <li>Dương Gia thông báo kết quả và hướng xử lý trong 7 ngày làm việc kể từ khi nhận đủ thông tin.</li>
+    </ol>
     <h2 id="dieu-khoan">Điều khoản sử dụng website</h2>
     <ul>
       <li>Website giới thiệu doanh nghiệp và sản phẩm; website không nhận đặt hàng hay thanh toán trực tuyến. Đơn hàng được xác nhận qua báo giá, đơn đặt hàng hoặc ứng dụng DG Đặt Hàng dành cho đại lý.</li>
@@ -737,6 +744,7 @@ def build_policy():
     </ul>
     <h2 id="doanh-nghiep">Thông tin doanh nghiệp</h2>
     <p>{CTY['ten']} · MST {CTY['mst']} · Trụ sở: {CTY['dia_chi']} · Điện thoại: {CTY['hotline']} · Email: {CTY['email']}.</p>
+    <p>Giấy chứng nhận đăng ký doanh nghiệp số {CTY['mst']}, đăng ký lần đầu ngày 13/01/2025 tại Phòng Đăng ký kinh doanh – Sở Kế hoạch và Đầu tư tỉnh Đắk Lắk.</p>
     <p class="stamp">Cập nhật ngày {SNAPSHOT_AT}.</p>
   </div>
 </div></section>'''
