@@ -70,7 +70,7 @@ CTY = {
 
 # Quyền lợi hạng — bản chụp từ app (thongTin.hang_ds); website đọc lại trực tiếp khi tải trang
 TIERS = [
-    ('Bạc', 'Khi mở tài khoản đại lý', 'Xem giá đại lý và đặt hàng trên app'),
+    ('Bạc', 'Khi mở tài khoản đại lý', 'Xem giá đại lý và đặt hàng trên ứng dụng'),
     ('Vàng', 'Xét theo doanh số đã thanh toán mỗi quý', 'Ưu tiên phân bổ hàng khi khan hiếm · hỗ trợ bảng hiệu, ấn phẩm'),
     ('Kim Cương', 'Đối tác chiến lược do Giám đốc mời', 'Ưu tiên cao nhất · hỗ trợ bảng hiệu lớn · quà cuối năm'),
 ]

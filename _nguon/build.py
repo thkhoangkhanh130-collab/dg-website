@@ -110,6 +110,12 @@ def href(r, path):
 PHONE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>'
 NOIMG = '<div class="noimg"><div><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="7"/><circle cx="32" cy="32" r="10" fill="none" stroke="currentColor" stroke-width="3"/></svg>Ảnh đang cập nhật</div></div>'
 
+TAB = {'': 'Dương Gia', 'san-pham/': 'Sản phẩm', 'dai-ly.html': 'Đại lý', 'thuong-hieu-wynstar.html': 'WYNSTAR', 'bao-hanh.html': 'Bảo hành', 'gioi-thieu.html': 'Về chúng tôi', 'lien-he.html': 'Liên hệ', 'chinh-sach.html': 'Chính sách', '404.html': 'Không tìm thấy trang'}
+def tab_title(path, title):
+    if path == '': return 'Dương Gia'
+    if path in TAB: return 'Dương Gia · ' + TAB[path]
+    m = re.match(r'san-pham/(.+)\.html$', path)
+    return 'Dương Gia · ' + (m.group(1).upper() if m else title)
 def page(path, depth, title, desc, active, body, ld=None, og_title=None):
     r = '../' * depth
     canon = CTY['domain'] + '/' + path
@@ -122,7 +128,7 @@ def page(path, depth, title, desc, active, body, ld=None, og_title=None):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{e(title)}</title>
+<title>{e(tab_title(path, title))}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{e(canon)}">
 <meta property="og:type" content="website">
@@ -163,7 +169,7 @@ def page(path, depth, title, desc, active, body, ld=None, og_title=None):
 <footer class="foot">
   <div class="wrap">
     <div><img src="{r}img/logo-dg-trang.png" alt="Dương Gia" width="83" height="34" style="height:34px;width:auto;margin-bottom:14px">
-      <p class="co"><b>{CTY['ten']}</b><br>MST {CTY['mst']} · Người đại diện: {CTY['dai_dien']} – {CTY['chuc_vu']}<br>Trụ sở: {CTY['dia_chi']}<br>Hotline · Zalo: <a href="tel:{CTY['tel']}">{CTY['hotline']}</a> · Email: <a href="mailto:{CTY['email']}">{CTY['email']}</a></p></div>
+      <p class="co"><b>{CTY['ten']}</b><br>MST {CTY['mst']}<br>Trụ sở: {CTY['dia_chi']}<br>Hotline · Zalo: <a href="tel:{CTY['tel']}">{CTY['hotline']}</a> · Email: <a href="mailto:{CTY['email']}">{CTY['email']}</a></p></div>
     <div><h2>Sản phẩm &amp; đại lý</h2><ul><li><a href="{href(r, 'san-pham/')}">Lốp WYNSTAR</a></li><li><a href="{href(r, 'dai-ly.html')}">Chương trình đại lý</a></li><li><a href="{CTY['app']}" rel="noopener">Ứng dụng DG Đặt Hàng ↗</a></li><li><a href="{href(r, 'bao-hanh.html')}">Bảo hành &amp; kỹ thuật</a></li></ul></div>
     <div><h2>Công ty</h2><ul><li><a href="{href(r, 'gioi-thieu.html')}">Về Dương Gia</a></li><li><a href="{href(r, 'thuong-hieu-wynstar.html')}">Thương hiệu WYNSTAR</a></li><li><a href="{href(r, 'lien-he.html')}">Liên hệ</a></li><li><a href="{href(r, 'chinh-sach.html')}">Chính sách &amp; điều khoản</a></li></ul></div>
   </div>
@@ -336,7 +342,7 @@ def build_home():
   <h2 class="disp">Ba hạng đại lý, quyền lợi tăng theo đồng hành</h2>
   <p class="intro">Hạng Bạc khi mở tài khoản; Vàng xét theo doanh số đã thanh toán mỗi quý; Kim Cương dành cho đối tác chiến lược. Giá theo hạng chỉ hiển thị khi đăng nhập ứng dụng.</p>
   {tiers_html(r)}
-  <div class="ctas" style="margin-top:32px"><a class="btn btn-ink" href="{href(r, 'dai-ly.html')}#dang-ky">Mở tài khoản đại lý</a><a class="btn btn-line" href="{CTY['app']}" rel="noopener">Đăng nhập DG Đặt Hàng</a></div>
+  <div class="ctas" style="margin-top:32px"><a class="btn btn-ink" href="{href(r, 'dai-ly.html')}#dang-ky">Mở tài khoản đại lý</a><a class="btn btn-line" href="{CTY['app']}" rel="noopener">Đặt hàng</a></div>
 </div></section>
 <section class="band-2"><div class="sec"><div class="wrap">
   <div class="two">
@@ -545,17 +551,10 @@ def build_dealer():
              ('Giao hàng', 'Giao toàn quốc theo địa chỉ; miễn phí giao hàng trong TP.HCM (địa bàn cũ).')]
     step_html = ''.join(f'<div class="step"><div class="k">{n}</div><h3 class="disp">{e(t)}</h3><p>{e(d)}</p></div>' for n, (t, d) in enumerate(steps, 1))
     body = f'''
-<section class="hero" style="background:var(--char-3)"><div class="wrap dl-hero">
-  <div>{crumbs(r, [('Dành cho đại lý', 'dai-ly.html')])}<p class="eyebrow">Dành cho đại lý · garage · đội xe</p><h1 class="disp">Bán WYNSTAR cùng Dương Gia</h1>
+<section class="hero" style="background:var(--char-3)"><div class="wrap" style="max-width:860px">
+  <div>{crumbs(r, [('Dành cho đại lý', 'dai-ly.html')])}<p class="eyebrow">Dành cho đại lý · garage · đội xe</p><h1 class="disp">Trở thành đồng đội Dương Gia</h1>
     <p class="lead">Nguồn hàng nhập khẩu chính ngạch, giá theo hạng đại lý, đặt hàng và theo dõi đơn trên ứng dụng — không phải gọi hỏi giá từng lần.</p>
-    <div class="ctas"><a class="btn btn-pri" href="#dang-ky">Mở tài khoản đại lý</a><a class="btn btn-ghost" href="{CTY['app']}" rel="noopener">Đăng nhập DG Đặt Hàng</a></div></div>
-  <div class="form" style="grid-template-columns:1fr;gap:10px">
-    <span class="lb" style="color:var(--brass-l)">Ứng dụng DG Đặt Hàng</span>
-    <div style="display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line-d);padding-bottom:10px;font-size:14px;color:var(--soft-d)"><span>Giá đại lý theo hạng</span><b style="color:var(--cream)">Tự động</b></div>
-    <div style="display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line-d);padding-bottom:10px;font-size:14px;color:var(--soft-d)"><span>Tình trạng kho</span><b style="color:var(--cream)">Còn · Sắp hết · Sắp về</b></div>
-    <div style="display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line-d);padding-bottom:10px;font-size:14px;color:var(--soft-d)"><span>Đặt hàng</span><b style="color:var(--cream)">24/7 · Dương Gia xác nhận đơn</b></div>
-    <div style="display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--soft-d)"><span>Ngôn ngữ</span><b style="color:var(--cream)">Tiếng Việt · English</b></div>
-  </div>
+    <div class="ctas"><a class="btn btn-pri" href="#dang-ky">Mở tài khoản đại lý</a><a class="btn btn-ghost" href="{CTY['app']}" rel="noopener">Đặt hàng</a></div></div>
 </div></section>
 <section class="sec"><div class="wrap">
   <p class="eyebrow">Vì sao hợp tác</p><h2 class="disp">Ba điều đại lý cần, Dương Gia làm sẵn</h2>
@@ -626,7 +625,6 @@ def build_warranty():
     </div>
     <h2 id="su-dung">Sử dụng &amp; bảo dưỡng</h2>
     <ul>
-      <li>Lắp đúng vị trí theo công bố của nhà sản xuất. Các mẫu gai WYNSTAR trong tài liệu hiện có được nhà sản xuất công bố cho trục sơ mi rơ moóc — xem mục “Vị trí lắp” ở từng mẫu gai.</li>
       <li>Kiểm tra áp suất khi lốp nguội, bơm theo bảng tải trọng – áp suất của nhà sản xuất.</li>
       <li>Không chở vượt tải trọng tương ứng với chỉ số tải của lốp.</li>
       <li>Lốp lắp đôi nên cùng quy cách, cùng mẫu gai và mức mòn tương đương.</li>
@@ -646,9 +644,8 @@ def build_about():
     <div class="prose"><h2>Chúng tôi là ai</h2>
       <p>Công ty TNHH Thương mại Dịch vụ XNK Dương Gia nhập khẩu trực tiếp lốp tải từ nhà máy và phân phối cho đại lý, garage, đội xe và doanh nghiệp vận tải.</p>
       <p>Dương Gia hiện là nhà phân phối lốp WYNSTAR tại Việt Nam và vận hành cửa hàng dịch vụ lốp tại Đắk Lắk: lốp xe, mâm xe, ắc quy, dầu nhớt và các dịch vụ lốp.</p>
-      <h2>Người điều hành</h2>
-      <p><b>{CTY['dai_dien']}</b> — {CTY['chuc_vu']}. Hơn 10 năm trong ngành tài chính – ngân hàng, gần nhất tại HSBC Việt Nam và Standard Chartered Việt Nam. Thành lập Dương Gia năm 2025 và toàn tâm điều hành từ tháng 7/2026. Thành viên Nhóm Xúc Tiến Thương Mại – Giới Doanh Nhân Công Giáo TGP TP.HCM.</p>
-      <p>Triết lý: bán đúng giá, nói đúng chất lượng, giữ đúng lời hẹn.</p></div>
+      <h2>Cách làm việc</h2>
+      <p>Bán đúng giá, nói đúng chất lượng, giữ đúng lời hẹn — làm ăn lâu dài không có đường tắt.</p></div>
     <div><h2 class="disp" style="font-size:34px;margin-bottom:16px">Cách chúng tôi làm việc</h2>
       <div style="display:grid;gap:14px">
         <div class="lc"><span class="tag">Minh bạch</span><p>Giá niêm yết công khai, chính sách đại lý rõ ràng, hóa đơn VAT đầy đủ cho đơn sỉ và khách doanh nghiệp.</p></div>
@@ -664,13 +661,12 @@ def build_about():
     <tr><th>Tên tiếng Anh</th><td>{CTY['ten_en']}</td></tr>
     <tr><th>Mã số thuế</th><td>{CTY['mst']}</td></tr>
     <tr><th>Trụ sở</th><td>{CTY['dia_chi']}</td></tr>
-    <tr><th>Người đại diện theo pháp luật</th><td>{CTY['dai_dien']} — {CTY['chuc_vu']}</td></tr>
     <tr><th>Điện thoại</th><td><a href="tel:{CTY['tel']}">{CTY['hotline']}</a></td></tr>
     <tr><th>Email</th><td><a href="mailto:{CTY['email']}">{CTY['email']}</a></td></tr>
   </tbody></table></div>
   <div class="ctas" style="margin-top:28px"><a class="btn btn-ink" href="{href(r, 'san-pham/')}">Xem sản phẩm</a><a class="btn btn-line" href="{href(r, 'lien-he.html')}">Liên hệ</a></div>
 </div></div></section>'''
-    write('gioi-thieu.html', page('gioi-thieu.html', 0, 'Về Dương Gia — nhà nhập khẩu & phân phối lốp ô tô', 'Công ty TNHH TMDV XNK Dương Gia nhập khẩu trực tiếp và phân phối lốp tải WYNSTAR cho đại lý, garage, đội xe tại Việt Nam. Thông tin doanh nghiệp, người điều hành.', 'gioi-thieu', body, [ld_crumbs([('Về Dương Gia', 'gioi-thieu.html')])]))
+    write('gioi-thieu.html', page('gioi-thieu.html', 0, 'Về Dương Gia — nhà nhập khẩu & phân phối lốp ô tô', 'Công ty TNHH TMDV XNK Dương Gia nhập khẩu trực tiếp và phân phối lốp tải WYNSTAR cho đại lý, garage, đội xe tại Việt Nam. Thông tin doanh nghiệp.', 'gioi-thieu', body, [ld_crumbs([('Về Dương Gia', 'gioi-thieu.html')])]))
 
 # ------------------------------------------------------------------ LIÊN HỆ
 def build_contact():
@@ -740,7 +736,7 @@ def build_policy():
       <li>Nhãn hiệu WYNSTAR thuộc quyền sở hữu của nhà sản xuất. Nội dung, hình ảnh do Dương Gia biên soạn trên website thuộc quyền của Dương Gia.</li>
     </ul>
     <h2 id="doanh-nghiep">Thông tin doanh nghiệp</h2>
-    <p>{CTY['ten']} · MST {CTY['mst']} · Trụ sở: {CTY['dia_chi']} · Người đại diện: {CTY['dai_dien']} – {CTY['chuc_vu']} · Điện thoại: {CTY['hotline']} · Email: {CTY['email']}.</p>
+    <p>{CTY['ten']} · MST {CTY['mst']} · Trụ sở: {CTY['dia_chi']} · Điện thoại: {CTY['hotline']} · Email: {CTY['email']}.</p>
     <p class="stamp">Cập nhật ngày {SNAPSHOT_AT}.</p>
   </div>
 </div></section>'''
