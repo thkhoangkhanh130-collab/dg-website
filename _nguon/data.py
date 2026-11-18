@@ -43,7 +43,7 @@ SKUS = [
 ]
 
 # Mẫu gai có ảnh (thư mục anh_san_pham của app)
-IMAGES = {'D303', 'D303PRO', 'D307', 'D320', 'D387', 'D506', 'D520', 'D526', 'D555', 'D563', 'D567', 'D585', 'D589', 'RS02'}
+IMAGES = {'D205', 'D300', 'D517', 'D806', 'D929', 'D939', 'D979+', 'D303', 'D303PRO', 'D307', 'D320', 'D387', 'D506', 'D520', 'D526', 'D555', 'D563', 'D567', 'D585', 'D589', 'RS02'}
 
 # Tuyến đường theo "road conditions" trong catalog nhà máy
 ROUTE = {'RS02': 'cao-toc', 'D303': 'cao-toc', 'D303PRO': 'cao-toc', 'D307': 'cao-toc', 'D320': 'cao-toc', 'D387': 'cao-toc',
