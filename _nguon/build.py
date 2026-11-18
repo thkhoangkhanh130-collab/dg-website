@@ -16,6 +16,7 @@ CSS = open(os.path.join(B, 'src', 'site.css'), encoding='utf-8').read()
 JS = open(os.path.join(B, 'src', 'site.js'), encoding='utf-8').read()
 e = lambda s: html.escape(str(s), quote=True)
 TODAY = '2026-11-02'
+ASSET_V = '20261118'  # đổi khi sửa site.css/site.js để trình duyệt tải bản mới
 
 # ------------------------------------------------------------------ dữ liệu
 def key(s): return re.sub(r'\s+', ' ', str(s)).strip().lower()
@@ -119,8 +120,8 @@ def tab_title(path, title):
 def page(path, depth, title, desc, active, body, ld=None, og_title=None):
     r = '../' * depth
     canon = CTY['domain'] + '/' + path
-    style = '<style>' + CSS + '</style>' if MODE == 'preview' else '<link rel="stylesheet" href="%sassets/site.css?v=%s">' % (r, TODAY.replace('-', ''))
-    script = '<script>' + JS + '</script>' if MODE == 'preview' else '<script src="%sassets/site.js?v=%s" defer></script>' % (r, TODAY.replace('-', ''))
+    style = '<style>' + CSS + '</style>' if MODE == 'preview' else '<link rel="stylesheet" href="%sassets/site.css?v=%s">' % (r, ASSET_V)
+    script = '<script>' + JS + '</script>' if MODE == 'preview' else '<script src="%sassets/site.js?v=%s" defer></script>' % (r, ASSET_V)
     lds = ''.join('<script type="application/ld+json">%s</script>' % json.dumps(x, ensure_ascii=False).replace('</', '<\\/') for x in (ld or []))
     menu = ''.join('<li><a href="%s"%s>%s</a></li>' % (href(r, p), ' aria-current="page"' if k == active else '', e(t)) for k, t, p in NAV)
     return f'''<!doctype html>
@@ -131,6 +132,7 @@ def page(path, depth, title, desc, active, body, ld=None, og_title=None):
 <title>{e(tab_title(path, title))}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{e(canon)}">
+<link rel="alternate" hreflang="vi" href="{e(canon)}"><link rel="alternate" hreflang="en" href="{e(CTY['domain'] + '/en/' + path)}"><link rel="alternate" hreflang="x-default" href="{e(canon)}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:site_name" content="Dương Gia">
@@ -154,6 +156,7 @@ def page(path, depth, title, desc, active, body, ld=None, og_title=None):
 <div class="topbar"><div class="wrap">
   <span>Nhà phân phối <b>WYNSTAR</b> tại Việt Nam · Lốp tải radial toàn thép</span>
   <span class="r">Hotline · Zalo <a href="tel:{CTY['tel']}"><b>{CTY['hotline']}</b></a></span>
+  <span class="lg"><b aria-current="true">VN</b><i>|</i><a href="{href(r + 'en/', path)}" hreflang="en" lang="en">EN</a></span>
 </div></div>
 <header class="nav"><div class="wrap">
   <a class="logo" href="{href(r, '')}" aria-label="Dương Gia — trang chủ"><img src="{r}img/logo-dg-trang.png" alt="Dương Gia" width="97" height="40"></a>
@@ -761,6 +764,7 @@ def build_404():
     html_ = html_.replace('href="img/', 'href="/img/').replace('src="img/', 'src="/img/').replace('href="assets/', 'href="/assets/').replace('src="assets/', 'src="/assets/')
     for p in ['san-pham/', 'dai-ly.html', 'bao-hanh.html', 'gioi-thieu.html', 'lien-he.html', 'chinh-sach.html', 'thuong-hieu-wynstar.html']:
         html_ = html_.replace('href="%s"' % p, 'href="/%s"' % p)
+    html_ = html_.replace('href="en/404.html"', 'href="/en/"')
     html_ = html_.replace('href="./"', 'href="/"').replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"')
     write('404.html', html_)
 

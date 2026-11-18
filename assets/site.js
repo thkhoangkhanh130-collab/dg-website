@@ -6,10 +6,13 @@
   var API = 'https://script.google.com/macros/s/AKfycbw6S1jHEfsWmsyHwW3COmzDLawIWZWzG35yVnyuU_TujN0s7rDlRUZu50-E4Uxyp0lBzQ/exec';
   var HOTLINE = '0973 929 321';
   var TTL = 10 * 60 * 1000;
+  var EN = document.documentElement.lang === 'en';
+  function L(vi, en) { return EN ? en : vi; }
+  function numEn(s) { return EN ? String(s).replace(/(\d+),(\d{1,2})(?![\d,])/g, '$1.$2').replace(/(\d{1,3}(?:\.\d{3})+)(?![\d]|\.\d)/g, function (m) { return m.replace(/\./g, ','); }) : s; }
 
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
-  function fmt(n) { n = Number(n); return (isFinite(n) && n > 0) ? n.toLocaleString('vi-VN') + ' đ' : 'Liên hệ'; }
+  function fmt(n) { n = Number(n); return (isFinite(n) && n > 0) ? (EN ? n.toLocaleString('en-US') + ' VND' : n.toLocaleString('vi-VN') + ' đ') : L('Liên hệ', 'Contact us'); }
   function key(s) { return String(s || '').toLowerCase().replace(/\s+/g, ' ').trim(); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function stKey(tt) {
@@ -19,7 +22,7 @@
     if (tt === 'Sắp về') return 'info';
     return 'off';
   }
-  function stLabel(tt) { var k = stKey(tt); return k === 'ok' ? 'Còn hàng' : k === 'warn' ? 'Sắp hết hàng' : k === 'info' ? 'Sắp về hàng' : 'Tạm hết hàng'; }
+  function stLabel(tt) { var k = stKey(tt); return k === 'ok' ? L('Còn hàng', 'In stock') : k === 'warn' ? L('Sắp hết hàng', 'Low stock') : k === 'info' ? L('Sắp về hàng', 'Arriving soon') : L('Tạm hết hàng', 'Out of stock'); }
   function setStatus(el, tt) { if (!el) return; var k = stKey(tt); el.className = el.className.replace(/\bst-\w+\b/g, '').trim() + ' st-' + k; el.textContent = stLabel(tt); }
   function store(k, v) { try { sessionStorage.setItem(k, JSON.stringify({ t: Date.now(), v: v })); } catch (e) { } }
   function load(k) { try { var o = JSON.parse(sessionStorage.getItem(k) || 'null'); return o && Date.now() - o.t < TTL ? o.v : null; } catch (e) { return null; } }
@@ -32,7 +35,7 @@
       .then(function (txt) {
         clearTimeout(timer);
         var j = JSON.parse(txt);
-        if (!j.ok) { var e = new Error(j.thongBao || 'Hệ thống chưa phản hồi.'); e.api = true; throw e; }
+        if (!j.ok) { var e = new Error(EN ? 'The system could not process your request. Please call or Zalo ' + HOTLINE + '.' : (j.thongBao || 'Hệ thống chưa phản hồi.')); e.api = true; throw e; }
         return j.data;
       }, function (err) { clearTimeout(timer); throw err; });
   }
@@ -61,9 +64,9 @@
     if (!PD) return;
     var s = PD.skus[PD.sel] || PD.skus[0]; if (!s) return;
     $$('.sz').forEach(function (b) { b.setAttribute('aria-pressed', String(Number(b.getAttribute('data-i')) === PD.sel)); });
-    ['li', 'od', 'sw', 'td', 'rim', 'single', 'dual'].forEach(function (k) { var el = $('#kv-' + k); if (el) el.textContent = s[k] || '—'; });
-    var pl = $('#p-pl'); if (pl) pl.textContent = 'Giá niêm yết · ' + s.size + ' ' + s.pr;
-    var pr = $('#p-price'); if (pr) pr.textContent = showPrice ? fmt(s.price) : 'Liên hệ';
+    ['li', 'od', 'sw', 'td', 'rim', 'single', 'dual'].forEach(function (k) { var el = $('#kv-' + k); if (el) el.textContent = numEn(s[k] || '—'); });
+    var pl = $('#p-pl'); if (pl) pl.textContent = L('Giá niêm yết · ', 'List price · ') + s.size + ' ' + s.pr;
+    var pr = $('#p-price'); if (pr) pr.textContent = showPrice ? fmt(s.price) : L('Liên hệ', 'Contact us');
     setStatus($('#p-status'), s.status);
     var q = $('#p-quote'); if (q) q.href = q.getAttribute('data-base') + '?ma=' + encodeURIComponent(s.label);
   }
@@ -81,7 +84,7 @@
         (!F.type || c.getAttribute('data-type') === F.type) && (!F.avail || st === 'ok' || st === 'warn');
       c.hidden = !ok; if (ok) n++;
     });
-    var cnt = $('#f-count'); if (cnt) cnt.textContent = n + ' quy cách';
+    var cnt = $('#f-count'); if (cnt) cnt.textContent = n + L(' quy cách', n === 1 ? ' size' : ' sizes');
     var em = $('#f-empty'); if (em) em.hidden = n > 0;
     $$('.chip[data-route]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-route') === F.route)); });
     if (push && window.history && history.replaceState) {
@@ -120,7 +123,7 @@
   /* ---------- dữ liệu sống từ hệ thống ---------- */
   function stamp() {
     var d = new Date(), p = function (x) { return (x < 10 ? '0' : '') + x; };
-    $$('.js-stamp').forEach(function (el) { el.textContent = 'Giá và tình trạng hàng cập nhật từ hệ thống lúc ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ' ' + p(d.getDate()) + '/' + p(d.getMonth() + 1) + '/' + d.getFullYear() + '.'; });
+    $$('.js-stamp').forEach(function (el) { el.textContent = L('Giá và tình trạng hàng cập nhật từ hệ thống lúc ', 'Prices and stock status updated from our system at ') + p(d.getHours()) + ':' + p(d.getMinutes()) + ' ' + p(d.getDate()) + '/' + p(d.getMonth() + 1) + '/' + d.getFullYear() + '.'; });
   }
   var needCat = $$('[data-sku]').length > 0 || !!PD;
   if (needCat) cached('catalog').then(function (data) {
@@ -128,7 +131,7 @@
     showPrice = data.hien_niem_yet !== false;
     $$('[data-sku]').forEach(function (el) {
       var p = map[el.getAttribute('data-sku')]; if (!p) return;
-      var pe = $('.js-price', el); if (pe) pe.textContent = showPrice ? fmt(p.gia_niem_yet) : 'Liên hệ';
+      var pe = $('.js-price', el); if (pe) pe.textContent = showPrice ? fmt(p.gia_niem_yet) : L('Liên hệ', 'Contact us');
       setStatus($('.js-status', el), p.tinh_trang);
       el.setAttribute('data-status', stKey(p.tinh_trang));
     });
@@ -137,7 +140,7 @@
   })['catch'](function () { /* giữ dữ liệu đã dựng sẵn */ });
 
   var tiers = $('[data-tiers]');
-  if (tiers) cached('thongTin').then(function (d) {
+  if (tiers && !EN) cached('thongTin').then(function (d) {
     (d.hang_ds || []).forEach(function (h) {
       var box = $('.tier[data-tier="' + String(h.ten).replace(/"/g, '') + '"] .js-ql', tiers); if (!box || !h.quyen_loi) return;
       box.innerHTML = String(h.quyen_loi).split(/\s*·\s*|\n+/).filter(Boolean).map(function (x) { return '<li>' + esc(x.charAt(0).toUpperCase() + x.slice(1)) + '</li>'; }).join('');
@@ -152,23 +155,23 @@
     function say(cls, html) { if (!msg) return; msg.className = 'msg full ' + cls; msg.innerHTML = html; msg.hidden = false; }
     f.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (val(f, 'website')) { say('ok', 'Dương Gia đã nhận thông tin.'); f.reset(); return; }
+      if (val(f, 'website')) { say('ok', L('Dương Gia đã nhận thông tin.', 'Dương Gia has received your details.')); f.reset(); return; }
       var sdt = phone(val(f, 'dien_thoai')), ten = val(f, 'ten') || val(f, 'nguoi_lien_he');
-      if (!ten) { say('err', 'Vui lòng nhập tên cửa hàng, đơn vị hoặc họ tên.'); return; }
-      if (!/^0\d{9,10}$/.test(sdt)) { say('err', 'Số điện thoại chưa đúng — cần 10–11 số, bắt đầu bằng 0.'); return; }
-      if (f.elements.consent && !f.elements.consent.checked) { say('err', 'Vui lòng đồng ý để Dương Gia dùng thông tin này liên hệ với bạn.'); return; }
+      if (!ten) { say('err', L('Vui lòng nhập tên cửa hàng, đơn vị hoặc họ tên.', 'Please enter your business, organisation or full name.')); return; }
+      if (!/^0\d{9,10}$/.test(sdt)) { say('err', L('Số điện thoại chưa đúng — cần 10–11 số, bắt đầu bằng 0.', 'Please enter a Vietnamese phone number (10–11 digits starting with 0, or +84). For international enquiries, email xuatnhapkhau.duonggia@gmail.com.')); return; }
+      if (f.elements.consent && !f.elements.consent.checked) { say('err', L('Vui lòng đồng ý để Dương Gia dùng thông tin này liên hệ với bạn.', 'Please agree that Dương Gia may use this information to contact you.')); return; }
       var parts = kind === 'dai-ly'
-        ? ['[Website · Đăng ký đại lý]', val(f, 'loai_hinh'), val(f, 'mst') ? 'MST: ' + val(f, 'mst') : '', val(f, 'ghi_chu')]
-        : ['[Website · Yêu cầu báo giá]', val(f, 'ma') ? 'Lốp: ' + val(f, 'ma') : '', val(f, 'so_luong') ? 'SL: ' + val(f, 'so_luong') : '', val(f, 'ghi_chu')];
+        ? [L('[Website · Đăng ký đại lý]', '[Website EN · Đăng ký đại lý]'), val(f, 'loai_hinh'), val(f, 'mst') ? 'MST: ' + val(f, 'mst') : '', val(f, 'ghi_chu')]
+        : [L('[Website · Yêu cầu báo giá]', '[Website EN · Yêu cầu báo giá]'), val(f, 'ma') ? 'Lốp: ' + val(f, 'ma') : '', val(f, 'so_luong') ? 'SL: ' + val(f, 'so_luong') : '', val(f, 'ghi_chu')];
       parts.splice(1, 0, 'Đã đồng ý CS bảo mật');
       var args = { ten: ten, nguoi_lien_he: val(f, 'nguoi_lien_he'), dien_thoai: sdt, tinh_thanh: val(f, 'tinh_thanh'), loai_xe: val(f, 'loai_xe'), ghi_chu: parts.filter(Boolean).join(' · ').slice(0, 300), lang: 'vi' };
-      if (btn) btn.disabled = true; say('', 'Đang gửi…');
+      if (btn) btn.disabled = true; say('', L('Đang gửi…', 'Sending…'));
       call('dangKyDaiLy', args).then(function () {
-        say('ok', '<b>Dương Gia đã nhận thông tin.</b> Chúng tôi sẽ liên hệ số ' + esc(sdt) + ' trong giờ làm việc. Cần gấp, vui lòng gọi hoặc Zalo ' + HOTLINE + '.');
+        say('ok', EN ? '<b>Dương Gia has received your details.</b> We will contact ' + esc(sdt) + ' during business hours (Vietnam time). If urgent, please call or Zalo +84 ' + HOTLINE.slice(1) + '.' : '<b>Dương Gia đã nhận thông tin.</b> Chúng tôi sẽ liên hệ số ' + esc(sdt) + ' trong giờ làm việc. Cần gấp, vui lòng gọi hoặc Zalo ' + HOTLINE + '.');
         f.reset();
       })['catch'](function (err) {
         if (err && err.api) say('err', esc(err.message));
-        else say('err', 'Chưa gửi được do lỗi kết nối. Vui lòng gọi hoặc Zalo <b>' + HOTLINE + '</b> — Dương Gia sẽ hỗ trợ ngay.');
+        else say('err', EN ? 'Could not send due to a connection error. Please call or Zalo <b>+84 ' + HOTLINE.slice(1) + '</b> — Dương Gia will help right away.' : 'Chưa gửi được do lỗi kết nối. Vui lòng gọi hoặc Zalo <b>' + HOTLINE + '</b> — Dương Gia sẽ hỗ trợ ngay.');
       }).then(function () { if (btn) btn.disabled = false; });
     });
   });

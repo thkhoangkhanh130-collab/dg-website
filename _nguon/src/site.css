@@ -49,9 +49,14 @@ a:hover{color:var(--ink)}
 
 /* đầu trang */
 .topbar{background:var(--char-3);color:var(--muted-d);font-size:12.5px;letter-spacing:.04em}
-.topbar .wrap{display:flex;justify-content:space-between;gap:16px;min-height:36px;align-items:center;flex-wrap:wrap}
+.topbar .wrap{display:flex;justify-content:space-between;gap:16px;min-height:36px;align-items:center}
 .topbar b{color:var(--cream);font-weight:600}
 .topbar a{color:var(--cream)}
+.topbar .lg{flex:none;display:flex;gap:8px;align-items:center;margin-left:auto;font-weight:600;letter-spacing:.08em}
+.topbar .lg b{color:var(--brass)}
+.topbar .lg i{font-style:normal;opacity:.5}
+.topbar .lg a{text-decoration:none}
+.topbar .lg a:hover{color:var(--brass)}
 .nav{background:var(--char);border-bottom:1px solid var(--line-d);position:sticky;top:0;z-index:50}
 .nav .wrap{display:flex;align-items:center;gap:24px;min-height:76px}
 .nav .logo img{height:40px;width:auto}
